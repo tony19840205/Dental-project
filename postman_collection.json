@@ -1,0 +1,138 @@
+{
+  "info": {
+    "name": "牙科跨院FHIR測試資料",
+    "description": "6位病人測試資料（含跨院矛盾病例）",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "FHIR_BASE_URL",
+      "value": "https://your-fhir-server.com/fhir",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Organizations",
+      "item": [
+        {
+          "name": "ORG-A 仁愛牙醫診所",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Organization\",\n  \"id\": \"ORG-A\",\n  \"name\": \"仁愛牙醫診所\",\n  \"identifier\": [\n    {\n      \"system\": \"http://healthcare.org.tw/\",\n      \"value\": \"CLINIC-A-001\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{FHIR_BASE_URL}}/Organization",
+              "host": ["{{FHIR_BASE_URL}}"],
+              "path": ["Organization"]
+            }
+          }
+        },
+        {
+          "name": "ORG-B 信義牙醫診所",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Organization\",\n  \"id\": \"ORG-B\",\n  \"name\": \"信義牙醫診所\",\n  \"identifier\": [\n    {\n      \"system\": \"http://healthcare.org.tw/\",\n      \"value\": \"CLINIC-B-002\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{FHIR_BASE_URL}}/Organization",
+              "host": ["{{FHIR_BASE_URL}}"],
+              "path": ["Organization"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Patients",
+      "item": [
+        {
+          "name": "P001 王小明（跨院矛盾-拔牙後治療）",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Patient\",\n  \"id\": \"P001\",\n  \"name\": [\n    {\n      \"text\": \"王小明\",\n      \"family\": \"王\",\n      \"given\": [\"小明\"]\n    }\n  ],\n  \"gender\": \"male\",\n  \"birthDate\": \"1985-03-15\",\n  \"identifier\": [\n    {\n      \"system\": \"http://www.moi.gov.tw/\",\n      \"value\": \"A123456789\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{FHIR_BASE_URL}}/Patient",
+              "host": ["{{FHIR_BASE_URL}}"],
+              "path": ["Patient"]
+            }
+          }
+        },
+        {
+          "name": "P002 李美玲（跨院矛盾-重複根管）",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Patient\",\n  \"id\": \"P002\",\n  \"name\": [\n    {\n      \"text\": \"李美玲\",\n      \"family\": \"李\",\n      \"given\": [\"美玲\"]\n    }\n  ],\n  \"gender\": \"female\",\n  \"birthDate\": \"1990-07-22\",\n  \"identifier\": [\n    {\n      \"system\": \"http://www.moi.gov.tw/\",\n      \"value\": \"B234567890\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{FHIR_BASE_URL}}/Patient",
+              "host": ["{{FHIR_BASE_URL}}"],
+              "path": ["Patient"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Upload All - Transaction Bundle",
+      "item": [
+        {
+          "name": "一次上傳所有資源（推薦）",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "file",
+              "file": {
+                "src": "TestPatients.json"
+              }
+            },
+            "url": {
+              "raw": "{{FHIR_BASE_URL}}",
+              "host": ["{{FHIR_BASE_URL}}"]
+            },
+            "description": "使用Transaction Bundle一次上傳所有41個資源"
+          }
+        }
+      ]
+    }
+  ]
+}

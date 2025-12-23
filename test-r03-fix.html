@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>R03 牙位不一致檢測測試</title>
+</head>
+<body>
+    <h1>R03 規則測試</h1>
+    <pre id="result"></pre>
+
+    <script>
+        // 模擬 checkCQLRules 的 R03 檢查邏輯
+        function testR03() {
+            const results = [];
+            
+            // 測試案例 1: 診斷#34，處置#33 (不匹配)
+            const test1 = {
+                diagnosisTeeth: new Set(['34']),
+                procedureTeeth: new Set(['33']),
+                procedure: 'FILLING'
+            };
+            
+            const alert1 = checkR03(test1.diagnosisTeeth, test1.procedureTeeth, test1.procedure);
+            results.push({
+                name: '測試案例1: 診斷#34，處置#33',
+                expected: '應該有警告',
+                result: alert1 ? '✅ PASS - 檢測到牙位不一致' : '❌ FAIL - 未檢測到'
+            });
+            
+            // 測試案例 2: 診斷#34，處置#34 (匹配)
+            const test2 = {
+                diagnosisTeeth: new Set(['34']),
+                procedureTeeth: new Set(['34']),
+                procedure: 'FILLING'
+            };
+            
+            const alert2 = checkR03(test2.diagnosisTeeth, test2.procedureTeeth, test2.procedure);
+            results.push({
+                name: '測試案例2: 診斷#34，處置#34',
+                expected: '不應該有警告',
+                result: !alert2 ? '✅ PASS - 牙位一致，無警告' : '❌ FAIL - 不應有警告'
+            });
+            
+            // 測試案例 3: 診斷#34+#35，處置#34+#33 (部分不匹配)
+            const test3 = {
+                diagnosisTeeth: new Set(['34', '35']),
+                procedureTeeth: new Set(['34', '33']),
+                procedure: 'FILLING'
+            };
+            
+            const alert3 = checkR03(test3.diagnosisTeeth, test3.procedureTeeth, test3.procedure);
+            results.push({
+                name: '測試案例3: 診斷#34+#35，處置#34+#33',
+                expected: '應該有警告(#33無診斷)',
+                result: alert3 ? '✅ PASS - 檢測到#33無對應診斷' : '❌ FAIL - 未檢測到'
+            });
+            
+            return results;
+        }
+        
+        function checkR03(diagnosisTeeth, procedureTeeth, procedure) {
+            if (diagnosisTeeth.size > 0 && procedureTeeth.size > 0 && procedure) {
+                const unmatchedProcedureTeeth = [];
+                procedureTeeth.forEach(tooth => {
+                    if (!diagnosisTeeth.has(tooth)) {
+                        unmatchedProcedureTeeth.push(tooth);
+                    }
+                });
+                
+                if (unmatchedProcedureTeeth.length > 0) {
+                    return {
+                        rule: 'R03',
+                        message: `處置牙位 ${unmatchedProcedureTeeth.map(t => '#' + t).join('、')} 沒有對應的診斷`
+                    };
+                }
+            }
+            return null;
+        }
+        
+        // 執行測試
+        const results = testR03();
+        const output = document.getElementById('result');
+        output.textContent = '='.repeat(60) + '\n';
+        output.textContent += 'R03 牙位不一致檢測測試結果\n';
+        output.textContent += '='.repeat(60) + '\n\n';
+        
+        results.forEach((r, i) => {
+            output.textContent += `${i + 1}. ${r.name}\n`;
+            output.textContent += `   預期: ${r.expected}\n`;
+            output.textContent += `   結果: ${r.result}\n\n`;
+        });
+        
+        const passCount = results.filter(r => r.result.includes('✅')).length;
+        output.textContent += '='.repeat(60) + '\n';
+        output.textContent += `總計: ${passCount}/${results.length} 通過\n`;
+        output.textContent += '='.repeat(60) + '\n';
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "dental-cross-clinic-fhir",
+  "version": "1.0.0",
+  "description": "牙科跨院FHIR病歷CQL規則測試",
+  "main": "test-cql.js",
+  "scripts": {
+    "test": "node test-cql.js"
+  },
+  "keywords": ["FHIR", "CQL", "dental"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cql-execution": "^2.4.0",
+    "cql-exec-fhir": "^2.0.0"
+  }
+}

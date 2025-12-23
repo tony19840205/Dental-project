@@ -1,0 +1,2905 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "Organization/ORG-A",
+      "resource": {
+        "resourceType": "Organization",
+        "id": "ORG-A",
+        "name": "仁愛牙醫診所",
+        "identifier": [
+          {
+            "system": "http://healthcare.org.tw/",
+            "value": "CLINIC-A-001"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Organization/ORG-B",
+      "resource": {
+        "resourceType": "Organization",
+        "id": "ORG-B",
+        "name": "信義牙醫診所",
+        "identifier": [
+          {
+            "system": "http://healthcare.org.tw/",
+            "value": "CLINIC-B-002"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Organization/ORG-C",
+      "resource": {
+        "resourceType": "Organization",
+        "id": "ORG-C",
+        "name": "大安牙醫診所",
+        "identifier": [
+          {
+            "system": "http://healthcare.org.tw/",
+            "value": "CLINIC-C-003"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Patient/P002",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "P002",
+        "name": [
+          {
+            "text": "李美玲",
+            "family": "李",
+            "given": [
+              "美玲"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1990-07-22",
+        "identifier": [
+          {
+            "system": "http://www.moi.gov.tw/",
+            "value": "B234567890"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P002-ENC02",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P002-ENC02",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-B"
+        },
+        "period": {
+          "start": "2025-10-20T15:00:00Z",
+          "end": "2025-10-20T15:45:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Procedure/P002-PROC02",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P002-PROC02",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "RCT-FIRST",
+              "display": "根管第一次療程"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC02"
+        },
+        "performedDateTime": "2025-10-20T15:20:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "36",
+                "display": "左下第一大臼齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "🔴 觸發 R02: 跨院重複記錄「根管第一次療程」"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Condition/P002-COND01",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P002-COND01",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-diagnosis",
+              "code": "CARIES-MILD",
+              "display": "輕度齲齒"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC02"
+        },
+        "onsetDateTime": "2025-10-20T15:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "36"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "🟠 觸發 R04: 診斷為輕度齲齒，但執行根管治療"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "ImagingStudy/P002-IMG01",
+      "resource": {
+        "resourceType": "ImagingStudy",
+        "id": "P002-IMG01",
+        "status": "available",
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "started": "2025-09-10T10:05:00Z",
+        "numberOfSeries": 1,
+        "numberOfInstances": 1,
+        "bodySite": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+              "code": "36"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "Encounter/P002-ENC03",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P002-ENC03",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2024-02-15T09:00:00Z",
+          "end": "2024-02-15T11:00:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Encounter/P002-ENC04",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P002-ENC04",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-B"
+        },
+        "period": {
+          "start": "2024-05-10T10:00:00Z",
+          "end": "2024-05-10T12:00:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Encounter/P002-ENC05",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P002-ENC05",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-C"
+        },
+        "period": {
+          "start": "2024-08-05T14:00:00Z",
+          "end": "2024-08-05T16:00:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Encounter/P002-ENC06",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P002-ENC06",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2024-11-20T09:30:00Z",
+          "end": "2024-11-20T11:30:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P002-COND02",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P002-COND02",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-diagnosis",
+              "code": "MISSING-TOOTH",
+              "display": "缺牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC03"
+        },
+        "onsetDateTime": "2024-03-15T09:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "16",
+                "display": "右上第一大臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Condition/P002-COND03",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P002-COND03",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-diagnosis",
+              "code": "MISSING-TOOTH",
+              "display": "缺牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC03"
+        },
+        "onsetDateTime": "2024-03-15T09:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "26",
+                "display": "左上第一大臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Condition/P002-COND04",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P002-COND04",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-diagnosis",
+              "code": "MISSING-TOOTH",
+              "display": "缺牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC04"
+        },
+        "onsetDateTime": "2024-06-20T10:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "46",
+                "display": "右下第一大臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Condition/P002-COND05",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P002-COND05",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-diagnosis",
+              "code": "MISSING-TOOTH",
+              "display": "缺牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC05"
+        },
+        "onsetDateTime": "2024-09-10T14:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "14",
+                "display": "右上第一小臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Condition/P002-COND06",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P002-COND06",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-diagnosis",
+              "code": "MISSING-TOOTH",
+              "display": "缺牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC05"
+        },
+        "onsetDateTime": "2024-09-10T14:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "24",
+                "display": "左上第一小臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Condition/P002-COND07",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P002-COND07",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-diagnosis",
+              "code": "MISSING-TOOTH",
+              "display": "缺牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC06"
+        },
+        "onsetDateTime": "2025-01-18T09:30:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "11",
+                "display": "右上中門齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Condition/P002-COND08",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P002-COND08",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-diagnosis",
+              "code": "MISSING-TOOTH",
+              "display": "缺牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC06"
+        },
+        "onsetDateTime": "2025-01-18T09:30:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "21",
+                "display": "左上中門齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P002-PROC03",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P002-PROC03",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "IMPLANT-PLACEMENT",
+              "display": "植牙手術"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC03"
+        },
+        "performedDateTime": "2024-02-15T09:30:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "16",
+                "display": "右上第一大臼齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "植體植入，品牌：Straumann，尺寸：4.1x10mm"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P002-PROC04",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P002-PROC04",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "IMPLANT-PLACEMENT",
+              "display": "植牙手術"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC03"
+        },
+        "performedDateTime": "2024-02-15T10:15:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "26",
+                "display": "左上第一大臼齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "植體植入，品牌：Nobel Biocare，尺寸：4.3x11.5mm"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P002-PROC05",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P002-PROC05",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "IMPLANT-PLACEMENT",
+              "display": "植牙手術"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC04"
+        },
+        "performedDateTime": "2024-05-10T10:30:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "46",
+                "display": "右下第一大臼齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "植體植入，品牌：Straumann，尺寸：4.1x12mm"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P002-PROC06",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P002-PROC06",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "IMPLANT-PLACEMENT",
+              "display": "植牙手術"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC05"
+        },
+        "performedDateTime": "2024-08-05T14:30:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "14",
+                "display": "右上第一小臼齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "植體植入，品牌：Dentsply Astra，尺寸：4.0x9mm"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P002-PROC07",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P002-PROC07",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "IMPLANT-PLACEMENT",
+              "display": "植牙手術"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC05"
+        },
+        "performedDateTime": "2024-08-05T15:15:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "24",
+                "display": "左上第一小臼齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "植體植入，品牌：Nobel Biocare，尺寸：3.75x10mm"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P002-PROC08",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P002-PROC08",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "IMPLANT-PLACEMENT",
+              "display": "植牙手術"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC06"
+        },
+        "performedDateTime": "2024-11-20T10:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "11",
+                "display": "右上中門齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "植體植入，品牌：Straumann，尺寸：3.3x12mm，前牙美學區域"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P002-PROC09",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P002-PROC09",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "IMPLANT-PLACEMENT",
+              "display": "植牙手術"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "encounter": {
+          "reference": "Encounter/P002-ENC06"
+        },
+        "performedDateTime": "2024-11-20T10:45:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "21",
+                "display": "左上中門齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "植體植入，品牌：Straumann，尺寸：3.3x12mm，前牙美學區域"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "ImagingStudy/P002-IMG02",
+      "resource": {
+        "resourceType": "ImagingStudy",
+        "id": "P002-IMG02",
+        "status": "available",
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "started": "2024-03-15T08:45:00Z",
+        "numberOfSeries": 1,
+        "numberOfInstances": 1,
+        "description": "植牙術前全口X光評估",
+        "bodySite": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "123037004",
+              "display": "Oral cavity"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "ImagingStudy/P002-IMG03",
+      "resource": {
+        "resourceType": "ImagingStudy",
+        "id": "P002-IMG03",
+        "status": "available",
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "started": "2024-03-15T09:15:00Z",
+        "numberOfSeries": 1,
+        "numberOfInstances": 1,
+        "description": "植牙術後X光確認（16, 26）",
+        "bodySite": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+              "code": "16"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "ImagingStudy/P002-IMG04",
+      "resource": {
+        "resourceType": "ImagingStudy",
+        "id": "P002-IMG04",
+        "status": "available",
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "started": "2024-06-20T10:15:00Z",
+        "numberOfSeries": 1,
+        "numberOfInstances": 1,
+        "description": "植牙術前CBCT評估（46）",
+        "bodySite": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+              "code": "46"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "ImagingStudy/P002-IMG05",
+      "resource": {
+        "resourceType": "ImagingStudy",
+        "id": "P002-IMG05",
+        "status": "available",
+        "subject": {
+          "reference": "Patient/P002"
+        },
+        "started": "2025-01-18T09:20:00Z",
+        "numberOfSeries": 1,
+        "numberOfInstances": 1,
+        "description": "前牙美學區植牙術前評估（11, 21）",
+        "bodySite": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+              "code": "11"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "Patient/P005",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "P005",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P004-COND01",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-diagnosis",
+              "code": "CARIES-MOD",
+              "display": "中度齲齒"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC01"
+        },
+        "onsetDateTime": "2025-12-05T14:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "46",
+                "display": "右下第一大臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P004-PROC01",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P004-PROC01",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "234568",
+              "display": "補牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC01"
+        },
+        "performedDateTime": "2025-12-05T14:15:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "46"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "✅ 正常病例：中度齲齒→補牙（診斷與處置相符）"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "ImagingStudy/P004-IMG01",
+      "resource": {
+        "resourceType": "ImagingStudy",
+        "id": "P004-IMG01",
+        "status": "available",
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "started": "2025-12-05T14:05:00Z",
+        "numberOfSeries": 1,
+        "numberOfInstances": 1,
+        "bodySite": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+              "code": "46"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "Encounter/P004-ENC02",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P004-ENC02",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2025-10-15T10:00:00Z",
+          "end": "2025-10-15T10:45:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P004-COND02",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P004-COND02",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "398010007",
+              "display": "缺牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC02"
+        },
+        "onsetDateTime": "2025-10-15T10:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "14",
+                "display": "右上第一小臼齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "缺牙位置：#14，建議製作牙橋（#13-14-15）"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P004-PROC02",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P004-PROC02",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "234681008",
+              "display": "牙橋製作"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC02"
+        },
+        "performedDateTime": "2025-10-15T10:20:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "14"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "牙橋範圍：#13-14-15（右上區）"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P004-ENC03",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P004-ENC03",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-B"
+        },
+        "period": {
+          "start": "2025-09-20T14:00:00Z",
+          "end": "2025-09-20T14:30:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P004-COND03",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P004-COND03",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "398010007",
+              "display": "缺牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC03"
+        },
+        "onsetDateTime": "2025-09-20T14:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "26",
+                "display": "左上第一大臼齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "缺牙位置：#26，評估植牙治療"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P004-PROC03",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P004-PROC03",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "232717009",
+              "display": "植牙手術"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC03"
+        },
+        "performedDateTime": "2025-09-20T14:15:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "26"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "植體植入：#26（左上區）"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P004-ENC04",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P004-ENC04",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2025-08-10T09:00:00Z",
+          "end": "2025-08-10T09:45:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P004-COND04",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P004-COND04",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "109564008",
+              "display": "牙髓炎"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC04"
+        },
+        "onsetDateTime": "2025-08-10T09:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "36",
+                "display": "左下第一大臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P004-PROC04",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P004-PROC04",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "RCT-FIRST",
+              "display": "根管第一次療程"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC04"
+        },
+        "performedDateTime": "2025-08-10T09:20:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "36"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P004-ENC05",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P004-ENC05",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2025-08-17T09:00:00Z",
+          "end": "2025-08-17T09:30:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Procedure/P004-PROC05",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P004-PROC05",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "RCT-FILL",
+              "display": "根管充填"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC05"
+        },
+        "performedDateTime": "2025-08-17T09:15:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "36"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P004-PROC06",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P004-PROC06",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "82130007",
+              "display": "牙冠製作"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC05"
+        },
+        "performedDateTime": "2025-08-17T09:30:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "36"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "根管治療後製作牙冠保護（左下區）"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P004-ENC06",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P004-ENC06",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-C"
+        },
+        "period": {
+          "start": "2025-07-05T15:00:00Z",
+          "end": "2025-07-05T15:30:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P004-COND05",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P004-COND05",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "109575003",
+              "display": "慢性牙周炎"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC06"
+        },
+        "onsetDateTime": "2025-07-05T15:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "21",
+                "display": "左上中門齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P004-PROC07",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P004-PROC07",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "234719000",
+              "display": "牙周治療"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P004"
+        },
+        "encounter": {
+          "reference": "Encounter/P004-ENC06"
+        },
+        "performedDateTime": "2025-07-05T15:15:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "21"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "前牙區牙周治療（左上區）"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Patient/P005",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "P005",
+        "name": [
+          {
+            "text": "張志明",
+            "family": "張",
+            "given": [
+              "志明"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1988-08-20",
+        "identifier": [
+          {
+            "system": "http://www.moi.gov.tw/",
+            "value": "E567890123"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P005-ENC01",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P005-ENC01",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2025-12-10T10:00:00Z",
+          "end": "2025-12-10T10:45:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Encounter/P005-ENC02",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P005-ENC02",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-C"
+        },
+        "period": {
+          "start": "2025-10-08T14:00:00Z",
+          "end": "2025-10-08T14:30:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P005-COND01",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P005-COND01",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-diagnosis",
+              "code": "CARIES-SEV",
+              "display": "重度齲齒"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC01"
+        },
+        "onsetDateTime": "2025-12-10T10:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "38",
+                "display": "左上智齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P005-PROC01",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P005-PROC01",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "129304002",
+              "display": "拔牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC01"
+        },
+        "performedDateTime": "2025-12-10T10:25:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "38"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "✅ 單院病例：重度齲齒→拔牙"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P005-PROC02",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P005-PROC02",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "129304002",
+              "display": "拔牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC02"
+        },
+        "performedDateTime": "2025-10-08T14:15:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "16",
+                "display": "右上第一大臼齒"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "跨院記錄：#16 已拔除，其他院所記錄"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "ImagingStudy/P005-IMG01",
+      "resource": {
+        "resourceType": "ImagingStudy",
+        "id": "P005-IMG01",
+        "status": "available",
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "started": "2025-12-10T10:10:00Z",
+        "numberOfSeries": 1,
+        "numberOfInstances": 2,
+        "bodySite": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+              "code": "38"
+            }
+          ]
+        },
+        "series": [
+          {
+            "uid": "1.2.840.113619.2.005",
+            "number": 1,
+            "modality": {
+              "system": "http://dicom.nema.org/resources/ontology/DCM",
+              "code": "DX"
+            },
+            "numberOfInstances": 2,
+            "instance": [
+              {
+                "uid": "1.2.840.113619.2.005.1",
+                "sopClass": {
+                  "system": "urn:ietf:rfc:3986",
+                  "code": "urn:oid:1.2.840.10008.5.1.4.1.1.1"
+                },
+                "number": 1,
+                "title": "術前全口X光"
+              },
+              {
+                "uid": "1.2.840.113619.2.005.2",
+                "sopClass": {
+                  "system": "urn:ietf:rfc:3986",
+                  "code": "urn:oid:1.2.840.10008.5.1.4.1.1.1"
+                },
+                "number": 2,
+                "title": "局部根尖片"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P005-ENC03",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P005-ENC03",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-B"
+        },
+        "period": {
+          "start": "2025-11-05T14:00:00Z",
+          "end": "2025-11-05T14:30:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P005-COND02",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P005-COND02",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "80967001",
+              "display": "重度齲齒"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC03"
+        },
+        "onsetDateTime": "2025-11-05T14:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "17",
+                "display": "右上第二大臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P005-PROC03",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P005-PROC03",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "EXTRACTION",
+              "display": "拔牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC03"
+        },
+        "performedDateTime": "2025-11-05T14:15:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "17"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "右上區拔牙"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P005-ENC04",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P005-ENC04",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2025-09-15T10:00:00Z",
+          "end": "2025-09-15T10:45:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P005-COND03",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P005-COND03",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "109575003",
+              "display": "重度牙周病"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC04"
+        },
+        "onsetDateTime": "2025-09-15T10:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "27",
+                "display": "左上第二大臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P005-PROC04",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P005-PROC04",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "EXTRACTION",
+              "display": "拔牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC04"
+        },
+        "performedDateTime": "2025-09-15T10:20:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "27"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "左上區拔牙（牙周病導致）"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P005-ENC05",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P005-ENC05",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-C"
+        },
+        "period": {
+          "start": "2025-08-20T09:00:00Z",
+          "end": "2025-08-20T09:45:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P005-COND04",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P005-COND04",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "35388009",
+              "display": "阻生齒"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC05"
+        },
+        "onsetDateTime": "2025-08-20T09:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "37",
+                "display": "左下第二大臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P005-PROC05",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P005-PROC05",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "EXTRACTION",
+              "display": "拔牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC05"
+        },
+        "performedDateTime": "2025-08-20T09:20:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "37"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "左下區拔牙（阻生齒）"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P005-ENC06",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P005-ENC06",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-B"
+        },
+        "period": {
+          "start": "2025-07-10T15:00:00Z",
+          "end": "2025-07-10T15:30:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P005-COND05",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P005-COND05",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "74474003",
+              "display": "根尖周病"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC06"
+        },
+        "onsetDateTime": "2025-07-10T15:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "47",
+                "display": "右下第二大臼齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P005-PROC06",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P005-PROC06",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "EXTRACTION",
+              "display": "拔牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC06"
+        },
+        "performedDateTime": "2025-07-10T15:15:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "47"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "右下區拔牙（根尖周病）"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P005-ENC07",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P005-ENC07",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2025-06-15T11:00:00Z",
+          "end": "2025-06-15T11:30:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P005-COND06",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P005-COND06",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "125593007",
+              "display": "外傷性牙損傷"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC07"
+        },
+        "onsetDateTime": "2025-06-15T11:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "11",
+                "display": "右上中門齒"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Procedure/P005-PROC07",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P005-PROC07",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/fhir/dental-procedures",
+              "code": "EXTRACTION",
+              "display": "拔牙"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/P005"
+        },
+        "encounter": {
+          "reference": "Encounter/P005-ENC07"
+        },
+        "performedDateTime": "2025-06-15T11:15:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/tooth-notation",
+                "code": "11"
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "前牙區拔牙（外傷導致無法保留）"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Patient/P006",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "P006",
+        "name": [
+          {
+            "text": "黃淑芬",
+            "family": "黃",
+            "given": [
+              "淑芬"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1982-04-30",
+        "identifier": [
+          {
+            "system": "http://www.moi.gov.tw/",
+            "value": "F678901234"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/P006-ENC01",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P006-ENC01",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-B"
+        },
+        "period": {
+          "start": "2025-12-05T14:00:00Z",
+          "end": "2025-12-05T14:45:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Procedure/P006-PROC01",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P006-PROC01",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-procedures",
+              "code": "FILLING",
+              "display": "補牙"
+            }
+          ],
+          "text": "補牙"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "performedDateTime": "2025-12-05T14:30:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "46",
+                "display": "牙位 #46"
+              }
+            ],
+            "text": "#46"
+          }
+        ],
+        "encounter": {
+          "reference": "Encounter/P006-ENC01"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P006-COND01",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P006-COND01",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "encounter-diagnosis"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-conditions",
+              "code": "CARIES-MILD",
+              "display": "輕度齲齒"
+            }
+          ],
+          "text": "輕度齲齒"
+        },
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "46",
+                "display": "牙位 #46"
+              }
+            ],
+            "text": "#46"
+          }
+        ],
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "encounter": {
+          "reference": "Encounter/P006-ENC01"
+        },
+        "onsetDateTime": "2025-12-01"
+      }
+    },
+    {
+      "fullUrl": "Encounter/P006-ENC02",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P006-ENC02",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2025-10-15T10:00:00Z",
+          "end": "2025-10-15T11:30:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Procedure/P006-PROC02",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P006-PROC02",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-procedures",
+              "code": "BRIDGE",
+              "display": "牙橋製作"
+            }
+          ],
+          "text": "牙橋製作"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "performedDateTime": "2025-10-15T11:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "14",
+                "display": "牙位 #14"
+              }
+            ],
+            "text": "#14"
+          }
+        ],
+        "encounter": {
+          "reference": "Encounter/P006-ENC02"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P006-COND02",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P006-COND02",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "resolved"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "encounter-diagnosis"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-conditions",
+              "code": "EXTRACTION",
+              "display": "缺牙"
+            }
+          ],
+          "text": "缺牙"
+        },
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "14",
+                "display": "牙位 #14"
+              }
+            ],
+            "text": "#14"
+          }
+        ],
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "encounter": {
+          "reference": "Encounter/P006-ENC02"
+        },
+        "onsetDateTime": "2024-06-20"
+      }
+    },
+    {
+      "fullUrl": "Encounter/P006-ENC03",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P006-ENC03",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-B"
+        },
+        "period": {
+          "start": "2025-09-20T09:00:00Z",
+          "end": "2025-09-20T11:00:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Procedure/P006-PROC03",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P006-PROC03",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-procedures",
+              "code": "IMPLANT",
+              "display": "植牙手術"
+            }
+          ],
+          "text": "植牙手術"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "performedDateTime": "2025-09-20T10:00:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "26",
+                "display": "牙位 #26"
+              }
+            ],
+            "text": "#26"
+          }
+        ],
+        "encounter": {
+          "reference": "Encounter/P006-ENC03"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P006-COND03",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P006-COND03",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "resolved"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "encounter-diagnosis"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-conditions",
+              "code": "EXTRACTION",
+              "display": "缺牙"
+            }
+          ],
+          "text": "缺牙"
+        },
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "26",
+                "display": "牙位 #26"
+              }
+            ],
+            "text": "#26"
+          }
+        ],
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "encounter": {
+          "reference": "Encounter/P006-ENC03"
+        },
+        "onsetDateTime": "2024-03-10"
+      }
+    },
+    {
+      "fullUrl": "Encounter/P006-ENC04",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P006-ENC04",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2025-08-10T14:00:00Z",
+          "end": "2025-08-10T14:45:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Procedure/P006-PROC04",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P006-PROC04",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-procedures",
+              "code": "RCT-FIRST",
+              "display": "根管第一次療程"
+            }
+          ],
+          "text": "根管第一次療程"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "performedDateTime": "2025-08-10T14:30:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "36",
+                "display": "牙位 #36"
+              }
+            ],
+            "text": "#36"
+          }
+        ],
+        "encounter": {
+          "reference": "Encounter/P006-ENC04"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P006-COND04",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P006-COND04",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "encounter-diagnosis"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-conditions",
+              "code": "PULPITIS",
+              "display": "牙髓炎"
+            }
+          ],
+          "text": "牙髓炎"
+        },
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "36",
+                "display": "牙位 #36"
+              }
+            ],
+            "text": "#36"
+          }
+        ],
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "encounter": {
+          "reference": "Encounter/P006-ENC04"
+        },
+        "onsetDateTime": "2025-08-05"
+      }
+    },
+    {
+      "fullUrl": "Encounter/P006-ENC05",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P006-ENC05",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-A"
+        },
+        "period": {
+          "start": "2025-08-17T10:00:00Z",
+          "end": "2025-08-17T11:00:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Procedure/P006-PROC05",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P006-PROC05",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-procedures",
+              "code": "RCT-FILL",
+              "display": "根管充填"
+            }
+          ],
+          "text": "根管充填"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "performedDateTime": "2025-08-17T10:30:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "36",
+                "display": "牙位 #36"
+              }
+            ],
+            "text": "#36"
+          }
+        ],
+        "encounter": {
+          "reference": "Encounter/P006-ENC05"
+        }
+      }
+    },
+    {
+      "fullUrl": "Procedure/P006-PROC06",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P006-PROC06",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-procedures",
+              "code": "CROWN",
+              "display": "牙冠製作"
+            }
+          ],
+          "text": "牙冠製作"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "performedDateTime": "2025-08-17T10:45:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "36",
+                "display": "牙位 #36"
+              }
+            ],
+            "text": "#36"
+          }
+        ],
+        "encounter": {
+          "reference": "Encounter/P006-ENC05"
+        }
+      }
+    },
+    {
+      "fullUrl": "Condition/P006-COND05",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "P006-COND05",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "resolved"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "encounter-diagnosis"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-conditions",
+              "code": "PULPITIS",
+              "display": "牙髓炎"
+            }
+          ],
+          "text": "牙髓炎"
+        },
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "36",
+                "display": "牙位 #36"
+              }
+            ],
+            "text": "#36"
+          }
+        ],
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "encounter": {
+          "reference": "Encounter/P006-ENC05"
+        },
+        "onsetDateTime": "2025-08-05"
+      }
+    },
+    {
+      "fullUrl": "Encounter/P006-ENC06",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "P006-ENC06",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "serviceProvider": {
+          "reference": "Organization/ORG-C"
+        },
+        "period": {
+          "start": "2025-07-05T09:00:00Z",
+          "end": "2025-07-05T10:00:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Procedure/P006-PROC07",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "P006-PROC07",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://example.org/dental-procedures",
+              "code": "PERIO-TX",
+              "display": "牙周治療"
+            }
+          ],
+          "text": "牙周治療"
+        },
+        "subject": {
+          "reference": "Patient/P006"
+        },
+        "performedDateTime": "2025-07-05T09:30:00Z",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://example.org/fdi-tooth-numbering",
+                "code": "21",
+                "display": "牙位 #21"
+              }
+            ],
+            "text": "#21"
+          }
+        ],
+        "encounter": {
+          "reference": "Encounter/P006-ENC06"
+        }
+      }
+    }
+  ]
+}
