@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART on FHIR Launch - 牙科跨院病歷智能輔助系統</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Microsoft JhengHei', 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #0066cc 0%, #004999 100%);
@@ -15,248 +20,193 @@
             min-height: 100vh;
             color: white;
         }
+
         .launch-container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             padding: 50px;
             max-width: 600px;
             width: 100%;
             text-align: center;
         }
-        .logo { font-size: 48px; margin-bottom: 20px; }
-        h1 { color: #333; font-size: 28px; margin-bottom: 10px; }
-        .subtitle { color: #666; font-size: 16px; margin-bottom: 30px; }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
         .spinner {
-            width: 50px; height: 50px; margin: 30px auto;
+            width: 50px;
+            height: 50px;
+            margin: 30px auto;
             border: 5px solid #f3f3f3;
             border-top: 5px solid #0066cc;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .status {
-            color: #666; font-size: 14px; margin-top: 20px;
-            padding: 15px; background: #f8f9fa; border-radius: 10px;
+            color: #666;
+            font-size: 14px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
         }
-        .error { color: #dc3545; background: #f8d7da; border: 1px solid #f5c6cb; }
-        .success { color: #155724; background: #d4edda; border: 1px solid #c3e6cb; }
+
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            color: #155724;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
         .info {
-            color: #004085; background: #cce5ff; border: 1px solid #b8daff;
-            font-size: 12px; margin-top: 15px; text-align: left; padding: 12px;
-            border-radius: 8px; word-break: break-all;
+            color: #004085;
+            background: #cce5ff;
+            border: 1px solid #b8daff;
+            font-size: 12px;
+            margin-top: 15px;
+            text-align: left;
         }
-        .hidden { display: none; }
+
+        .btn-standalone {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-standalone:hover {
+            background: #0052a3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
-<div class="launch-container">
-    <div class="logo">🦷</div>
-    <h1>牙科跨院病歷智能輔助系統</h1>
-    <p class="subtitle">SMART on FHIR Launch</p>
-    <div class="spinner" id="spinner"></div>
-    <div class="status" id="status">正在處理 SMART Launch 授權...</div>
-    <div class="info hidden" id="debug"></div>
-</div>
+    <div class="launch-container">
+        <div class="logo">🦷</div>
+        <h1>牙科跨院病歷智能輔助系統</h1>
+        <p class="subtitle">SMART on FHIR Launch</p>
+        
+        <div class="spinner"></div>
+        <div class="status" id="status">正在處理 SMART Launch 授權...</div>
+        <div class="info" id="debug"></div>
+    </div>
 
-<script>
- 
-function randomString(len = 64) {
-    const arr = new Uint8Array(len);
-    crypto.getRandomValues(arr);
-    return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
-}
+    <!-- FHIR Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/fhirclient@2.5.2/build/fhir-client.min.js"></script>
+    <script>
+        // SMART on FHIR Launch 處理邏輯（使用 fhirclient 正統流程）
+        (async function() {
+            const statusEl = document.getElementById('status');
+            const debugEl = document.getElementById('debug');
 
- 
-async function sha256Base64url(plain) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(plain);
-    const digest = await crypto.subtle.digest('SHA-256', data);
-    return btoa(String.fromCharCode(...new Uint8Array(digest)))
-        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-}
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const code = urlParams.get('code');
+                const iss = urlParams.get('iss');
+                const launch = urlParams.get('launch');
 
-function setStatus(msg, type = '') {
-    const el = document.getElementById('status');
-    el.textContent = msg;
-    el.className = 'status ' + type;
-}
+                debugEl.innerHTML = `
+                    <strong>OAuth 參數：</strong><br>
+                    Code: ${code ? '✓ 已接收' : '✗ 未接收'}<br>
+                    ISS: ${iss || '未提供'}<br>
+                    Launch: ${launch ? '✓' : '✗'}
+                `;
 
-function showDebug(html) {
-    const el = document.getElementById('debug');
-    el.classList.remove('hidden');
-    el.innerHTML = html;
-}
+                if (!code && iss) {
+                    // 第一步：發起 SMART 授權（fhirclient 自動處理 PKCE）
+                    statusEl.textContent = '正在重定向到授權頁面...';
+                    await FHIR.oauth2.authorize({
+                        client_id: 'cc344727-6f90-496c-94fd-c7829aa9a51d',
+                        scope: 'launch patient/*.read openid fhirUser',
+                        redirect_uri: window.location.origin + window.location.pathname,
+                        iss: iss,
+                        launch: launch
+                    });
+                    return;
+                }
 
- 
-(async function() {
-    try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const code  = urlParams.get('code');
-        const state = urlParams.get('state');
-        const iss   = urlParams.get('iss');
-        const launch = urlParams.get('launch');
-        const error = urlParams.get('error');
+                if (code) {
+                    // 第二步：完成授權 → 換 token → 讀取病人姓名
+                    statusEl.textContent = '正在完成授權並讀取患者資料...';
+                    const client = await FHIR.oauth2.ready();
 
-  
-        if (error) {
-            throw new Error(`授權伺服器拒絕：${error} — ${urlParams.get('error_description') || ''}`);
-        }
+                    // 讀取 Patient 資源
+                    const patient = await client.patient.read();
+                    const nameObj = patient.name && patient.name[0];
+                    let displayName = 'Unknown Patient';
+                    if (nameObj) {
+                        const prefix = (nameObj.prefix || []).join(' ');
+                        const given = (nameObj.given || []).join(' ');
+                        const family = nameObj.family || '';
+                        displayName = [prefix, given, family].filter(Boolean).join(' ');
+                    }
 
- 
-        if (code) {
-            setStatus('✓ 已收到授權碼，正在換取 Access Token...');
+                    // 存入 localStorage，供 dental-ehr.html 讀取
+                    localStorage.setItem('smart_patient_name', displayName);
 
- 
-            const savedState    = sessionStorage.getItem('smart_state');
-            const codeVerifier  = sessionStorage.getItem('smart_code_verifier');
-            const tokenEndpoint = sessionStorage.getItem('smart_token_endpoint');
-            const savedIss      = sessionStorage.getItem('smart_iss');
-            const redirectUri   = sessionStorage.getItem('smart_redirect_uri');
-            const clientId      = sessionStorage.getItem('smart_client_id');
+                    statusEl.className = 'status success';
+                    statusEl.textContent = `✓ 患者：${displayName}，正在跳轉到主系統...`;
+                    debugEl.className = 'info success';
+                    debugEl.innerHTML += `<br><strong>Patient ID：</strong>${client.patient.id}<br><strong>姓名：</strong>${displayName}`;
 
-    
-            if (!savedState || savedState !== state) {
-                throw new Error('State 不符合，可能遭受 CSRF 攻擊，請重新啟動。');
+                    setTimeout(() => {
+                        window.location.href = './dental-ehr.html?smart_launch=true';
+                    }, 1500);
+                    return;
+                }
+
+                // 無參數：提示錯誤
+                throw new Error('缺少必要的 OAuth 參數 (code 或 iss)。請從 EHR Launch 啟動此應用。');
+
+            } catch (error) {
+                console.error('SMART Launch Error:', error);
+
+                statusEl.className = 'status error';
+                statusEl.innerHTML = `
+                    <strong>❌ 授權失敗</strong><br>
+                    ${error.message}<br><br>
+                    <small>正在跳轉到主系統（獨立模式）...</small>
+                `;
+                debugEl.className = 'info error';
+                debugEl.innerHTML += `<br><br><strong>錯誤詳情：</strong><br>${error.stack || error.message}`;
+
+                setTimeout(() => {
+                    window.location.href = './dental-ehr.html';
+                }, 3000);
             }
-            if (!codeVerifier || !tokenEndpoint) {
-                throw new Error('找不到 PKCE 資料，請重新從 EHR 啟動。');
-            }
-
-            showDebug(`<strong>Token Exchange：</strong><br>endpoint: ${tokenEndpoint}`);
-
-       
-            const tokenRes = await fetch(tokenEndpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({
-                    grant_type:    'authorization_code',
-                    code:          code,
-                    redirect_uri:  redirectUri,
-                    client_id:     clientId,
-                    code_verifier: codeVerifier,
-                })
-            });
-
-            if (!tokenRes.ok) {
-                const errText = await tokenRes.text();
-                throw new Error(`Token endpoint 回應錯誤 ${tokenRes.status}：${errText}`);
-            }
-
-            const tokenData = await tokenRes.json();
-
-            if (!tokenData.access_token) {
-                throw new Error('Token response 中沒有 access_token：' + JSON.stringify(tokenData));
-            }
-
-      
-            ['smart_state','smart_code_verifier','smart_token_endpoint',
-             'smart_iss','smart_redirect_uri','smart_client_id'].forEach(k => sessionStorage.removeItem(k));
-
-         
-            localStorage.setItem('smart_token', JSON.stringify({
-                access_token:  tokenData.access_token,
-                token_type:    tokenData.token_type,
-                expires_in:    tokenData.expires_in,
-                scope:         tokenData.scope,
-                patient:       tokenData.patient,       
-                encounter:     tokenData.encounter,
-                id_token:      tokenData.id_token,
-                fhirServer:    savedIss,
-                issued_at:     Date.now(),
-            }));
-
-            setStatus('✓ 授權成功！正在跳轉到主系統...', 'success');
-            setTimeout(() => {
-                window.location.href = './dental-ehr.html?smart_launch=true';
-            }, 1200);
-            return;
-        }
-
-    
-        if (!iss) {
-            throw new Error(
-                '缺少 iss 參數。\n' +
-                '請從 EHR 系統或 https://launch.smarthealthit.org 啟動此應用，' +
-                '不要直接在瀏覽器輸入此網址。'
-            );
-        }
-
-        setStatus('正在查詢 FHIR Server 授權設定...');
-
-     
-        let authorizeUrl, tokenUrl;
-        try {
-            const wellKnownRes = await fetch(`${iss}/.well-known/smart-configuration`);
-            if (!wellKnownRes.ok) throw new Error('well-known 不可用');
-            const wk = await wellKnownRes.json();
-            authorizeUrl = wk.authorization_endpoint;
-            tokenUrl     = wk.token_endpoint;
-        } catch {
-         
-            setStatus('/metadata 查詢授權設定...');
-            const metaRes = await fetch(`${iss}/metadata`);
-            if (!metaRes.ok) throw new Error(`無法取得 FHIR metadata（${metaRes.status}）`);
-            const meta = await metaRes.json();
-            const secExt = meta?.rest?.[0]?.security?.extension?.find(
-                e => e.url === 'http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris'
-            );
-            if (!secExt) throw new Error('找不到 OAuth URI extension');
-            authorizeUrl = secExt.extension.find(e => e.url === 'authorize')?.valueUri;
-            tokenUrl     = secExt.extension.find(e => e.url === 'token')?.valueUri;
-        }
-
-        if (!authorizeUrl || !tokenUrl) {
-            throw new Error('無法解析 authorize / token endpoint');
-        }
-
-        showDebug(`<strong>SMART 設定</strong><br>
-            authorize: ${authorizeUrl}<br>
-            token: ${tokenUrl}`);
-
-   
-        const codeVerifier  = randomString(64);
-        const codeChallenge = await sha256Base64url(codeVerifier);
-        const newState      = randomString(32);
-        const clientId      = 'cc344727-6f90-496c-94fd-c7829aa9a51d';
-        const redirectUri   = window.location.origin + window.location.pathname;
-        const scope         = 'launch patient/*.read openid fhirUser';
-
- 
-        sessionStorage.setItem('smart_state',          newState);
-        sessionStorage.setItem('smart_code_verifier',  codeVerifier);
-        sessionStorage.setItem('smart_token_endpoint', tokenUrl);
-        sessionStorage.setItem('smart_iss',            iss);
-        sessionStorage.setItem('smart_redirect_uri',   redirectUri);
-        sessionStorage.setItem('smart_client_id',      clientId);
-
-     
-        const params = new URLSearchParams({
-            response_type:          'code',
-            client_id:              clientId,
-            redirect_uri:           redirectUri,
-            scope:                  scope,
-            state:                  newState,
-            aud:                    iss,
-            code_challenge:         codeChallenge,
-            code_challenge_method:  'S256',
-        });
-        if (launch) params.set('launch', launch);
-
-        const fullAuthUrl = `${authorizeUrl}?${params.toString()}`;
-
-        setStatus('正在導向授權頁面...');
-        console.log('🔐 Authorize URL:', fullAuthUrl);
-
-        setTimeout(() => { window.location.href = fullAuthUrl; }, 800);
-
-    } catch (err) {
-        console.error('SMART Launch Error:', err);
-        document.getElementById('spinner').style.display = 'none';
-        setStatus(`❌ 授權失敗：${err.message}`, 'error');
-        showDebug(`<strong>錯誤詳情：</strong><br><pre style="white-space:pre-wrap">${err.stack || err.message}</pre>`);
-    }
-})();
-</script>
+        })();
+    </script>
 </body>
 </html>
