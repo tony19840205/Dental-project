@@ -792,25 +792,22 @@
                     <span class="info-label">姓名：</span>
                     <span id="patientName">請選擇患者</span>
                 </div>
-                <div class="info-row">
+                <div class="info-row" style="display: none;">
                     <span class="info-label">病歷號：</span>
                     <span id="patientId">-</span>
                 </div>
-                <div class="info-row">
+                <div class="info-row" style="display: none;">
                     <span class="info-label">性別/年齡：</span>
                     <span id="patientDemo">-</span>
                 </div>
             </div>
 
-            <!-- 快速選擇患者 -->
-            <div class="form-section">
+            <!-- 快速選擇患者（已鎖定單一患者） -->
+            <div class="form-section" style="display: none;">
                 <div class="section-title">選擇患者</div>
                 <div class="form-group">
                     <select id="patientSelect" onchange="loadPatient()">
-                        <option value="">-- 請選擇患者 --</option>
-                        <option value="P002">李美玲 (B234567890)</option>
-                        <option value="P005">張志明 (E567890123)</option>
-                        <option value="P006">黃淑芬 (F678901234)</option>
+                        <option value="P002" selected>Geoffrey Abbott (B234567890)</option>
                     </select>
                 </div>
             </div>
@@ -1090,7 +1087,7 @@
 
         // 患者資料
         const patients = {
-            'P002': { name: '李美玲', id: 'B234567890', gender: '女', age: 35 },
+            'P002': { name: 'Geoffrey Abbott', id: 'B234567890', gender: '女', age: 35 },
             'P005': { name: '張志明', id: 'E567890123', gender: '男', age: 37 },
             'P006': { name: '黃淑芬', id: 'F678901234', gender: '女', age: 43 }
         };
@@ -3062,6 +3059,15 @@
             // 繼續原有的初始化流程
             console.log('✅ 系統已啟動');
             console.log('模式:', IS_SMART_MODE ? 'SMART Launch' : '獨立模式');
+            // 自動載入鎖定的患者
+            loadPatient();
+
+            // 如果從 SMART Launch 進來，用選到的病人姓名覆蓋顯示
+            const smartName = localStorage.getItem('smart_patient_name');
+            if (smartName) {
+                document.getElementById('patientName').textContent = smartName;
+                localStorage.removeItem('smart_patient_name');
+            }
         })();
     </script>
 </body>
