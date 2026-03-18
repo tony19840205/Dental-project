@@ -5,208 +5,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART on FHIR Launch - 牙科跨院病歷智能輔助系統</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Microsoft JhengHei', 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #0066cc 0%, #004999 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
-            color: white;
         }
-
         .launch-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 50px;
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
+            background: white; border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px; max-width: 600px; width: 100%; text-align: center;
         }
-
-        .logo {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
-
+        .logo { font-size: 48px; margin-bottom: 20px; }
+        h1 { color: #333; font-size: 28px; margin-bottom: 10px; }
+        .subtitle { color: #666; font-size: 16px; margin-bottom: 30px; }
         .spinner {
-            width: 50px;
-            height: 50px;
-            margin: 30px auto;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #0066cc;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            width: 50px; height: 50px; margin: 30px auto;
+            border: 5px solid #f3f3f3; border-top: 5px solid #0066cc;
+            border-radius: 50%; animation: spin 1s linear infinite;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
+        @keyframes spin { to { transform: rotate(360deg); } }
         .status {
-            color: #666;
-            font-size: 14px;
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
+            font-size: 14px; margin-top: 20px; padding: 15px;
+            border-radius: 10px; background: #f8f9fa; color: #666;
         }
-
-        .error {
-            color: #dc3545;
-            background: #f8d7da;
-            border: 1px solid #f5c6cb;
+        .status.error   { color: #dc3545; background: #f8d7da; border: 1px solid #f5c6cb; }
+        .status.success { color: #155724; background: #d4edda; border: 1px solid #c3e6cb; }
+        .debug {
+            color: #004085; background: #cce5ff; border: 1px solid #b8daff;
+            font-size: 12px; margin-top: 15px; text-align: left;
+            padding: 12px; border-radius: 8px; word-break: break-all; display: none;
         }
-
-        .success {
-            color: #155724;
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-        }
-
-        .info {
-            color: #004085;
-            background: #cce5ff;
-            border: 1px solid #b8daff;
-            font-size: 12px;
-            margin-top: 15px;
-            text-align: left;
-        }
-
-        .btn-standalone {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: #0066cc;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-standalone:hover {
-            background: #0052a3;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
+        .debug.show { display: block; }
     </style>
 </head>
 <body>
-    <div class="launch-container">
-        <div class="logo">🦷</div>
-        <h1>牙科跨院病歷智能輔助系統</h1>
-        <p class="subtitle">SMART on FHIR Launch</p>
-        
-        <div class="spinner"></div>
-        <div class="status" id="status">正在處理 SMART Launch 授權...</div>
-        <div class="info" id="debug"></div>
-    </div>
+<div class="launch-container">
+    <div class="logo">🦷</div>
+    <h1>牙科跨院病歷智能輔助系統</h1>
+    <p class="subtitle">SMART on FHIR Launch</p>
+    <div class="spinner" id="spinner"></div>
+    <div class="status" id="status">正在處理 SMART Launch 授權...</div>
+    <div class="debug" id="debug"></div>
+</div>
 
-    <!-- FHIR Client Library -->
-    <script src="https://cdn.jsdelivr.net/npm/fhirclient@2.5.2/build/fhir-client.min.js"></script>
-    <script>
-        // SMART on FHIR Launch 處理邏輯（使用 fhirclient 正統流程）
-        (async function() {
-            const statusEl = document.getElementById('status');
-            const debugEl = document.getElementById('debug');
+<script>
+// ★ 改成你的 Render 後端網址
+const BACKEND = 'https://sever2-hrcw.onrender.com/';
 
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                const code = urlParams.get('code');
-                const iss = urlParams.get('iss');
-                const launch = urlParams.get('launch');
+(async function () {
+    const statusEl = document.getElementById('status');
+    const debugEl  = document.getElementById('debug');
+    const spinner  = document.getElementById('spinner');
 
-                debugEl.innerHTML = `
-                    <strong>OAuth 參數：</strong><br>
-                    Code: ${code ? '✓ 已接收' : '✗ 未接收'}<br>
-                    ISS: ${iss || '未提供'}<br>
-                    Launch: ${launch ? '✓' : '✗'}
-                `;
+    function setStatus(msg, type) {
+        statusEl.textContent = msg;
+        statusEl.className = 'status ' + (type || '');
+    }
+    function showDebug(html) {
+        debugEl.innerHTML = html;
+        debugEl.classList.add('show');
+    }
 
-                if (!code && iss) {
-                    // 第一步：發起 SMART 授權（fhirclient 自動處理 PKCE）
-                    statusEl.textContent = '正在重定向到授權頁面...';
-                    await FHIR.oauth2.authorize({
-                        client_id: 'cc344727-6f90-496c-94fd-c7829aa9a51d',
-                        scope: 'launch patient/*.read openid fhirUser',
-                        redirect_uri: window.location.origin + window.location.pathname,
-                        iss: iss,
-                        launch: launch
-                    });
-                    return;
-                }
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const iss    = params.get('iss');
+        const launch = params.get('launch');
+        const error  = params.get('error');
+        const errDesc = params.get('error_description');
 
-                if (code) {
-                    // 第二步：完成授權 → 換 token → 讀取病人姓名
-                    statusEl.textContent = '正在完成授權並讀取患者資料...';
-                    const client = await FHIR.oauth2.ready();
+        showDebug(
+            '<strong>URL 參數：</strong><br>' +
+            'iss: '    + (iss    || '（無）') + '<br>' +
+            'launch: ' + (launch ? '✓' : '（無）') + '<br>' +
+            'error: '  + (error  || '（無）')
+        );
 
-                    // 讀取 Patient 資源
-                    const patient = await client.patient.read();
-                    const nameObj = patient.name && patient.name[0];
-                    let displayName = 'Unknown Patient';
-                    if (nameObj) {
-                        const prefix = (nameObj.prefix || []).join(' ');
-                        const given = (nameObj.given || []).join(' ');
-                        const family = nameObj.family || '';
-                        displayName = [prefix, given, family].filter(Boolean).join(' ');
-                    }
+        // 後端 callback 回傳錯誤
+        if (error) {
+            throw new Error('授權失敗：' + error + (errDesc ? ' — ' + errDesc : ''));
+        }
 
-                    // 存入 localStorage，供 dental-ehr.html 讀取
-                    localStorage.setItem('smart_patient_name', displayName);
+        // EHR Launch：有 iss，把 iss + launch 傳給後端，後端負責 redirect
+        if (iss) {
+            setStatus('正在重定向到授權頁面...');
 
-                    statusEl.className = 'status success';
-                    statusEl.textContent = `✓ 患者：${displayName}，正在跳轉到主系統...`;
-                    debugEl.className = 'info success';
-                    debugEl.innerHTML += `<br><strong>Patient ID：</strong>${client.patient.id}<br><strong>姓名：</strong>${displayName}`;
+            // 後端 /launch 會 redirect 到授權伺服器
+            // 直接把瀏覽器導向後端（讓後端做 redirect，session 才會建立）
+            const launchUrl = new URL(BACKEND + '/launch');
+            launchUrl.searchParams.set('iss', iss);
+            if (launch) launchUrl.searchParams.set('launch', launch);
 
-                    setTimeout(() => {
-                        window.location.href = './dental-ehr.html?smart_launch=true';
-                    }, 1500);
-                    return;
-                }
+            window.location.href = launchUrl.toString();
+            return;
+        }
 
-                // 無參數：提示錯誤
-                throw new Error('缺少必要的 OAuth 參數 (code 或 iss)。請從 EHR Launch 啟動此應用。');
+        // 沒有 iss：直接開網址，顯示錯誤
+        spinner.style.display = 'none';
+        throw new Error('缺少 iss 參數。請從 https://launch.smarthealthit.org 按下 Launch 按鈕啟動。');
 
-            } catch (error) {
-                console.error('SMART Launch Error:', error);
-
-                statusEl.className = 'status error';
-                statusEl.innerHTML = `
-                    <strong>❌ 授權失敗</strong><br>
-                    ${error.message}<br><br>
-                    <small>正在跳轉到主系統（獨立模式）...</small>
-                `;
-                debugEl.className = 'info error';
-                debugEl.innerHTML += `<br><br><strong>錯誤詳情：</strong><br>${error.stack || error.message}`;
-
-                setTimeout(() => {
-                    window.location.href = './dental-ehr.html';
-                }, 3000);
-            }
-        })();
-    </script>
+    } catch (err) {
+        console.error('SMART Launch Error:', err);
+        spinner.style.display = 'none';
+        setStatus('❌ 授權失敗：' + err.message, 'error');
+        showDebug('<pre style="white-space:pre-wrap">' + (err.stack || err.message) + '</pre>');
+    }
+})();
+</script>
 </body>
 </html>
