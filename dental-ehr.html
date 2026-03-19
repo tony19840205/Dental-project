@@ -984,52 +984,47 @@
          * 檢查是否為 OAuth callback，如果是則處理授權
          */
         async function initSmartLaunch() {
-            try {
-                // 檢查 URL 中是否包含 OAuth callback 參數
-                const urlParams = new URLSearchParams(window.location.search);
-                const hasAuthCode = urlParams.has('code') || urlParams.has('state');
 
-                if (hasAuthCode) {
-                    console.log('🔐 檢測到 OAuth callback，正在處理授權...');
-                    
-                    // 使用 FHIR Client 處理 OAuth callback
-                    SMART_CLIENT = await FHIR.oauth2.ready();
-                    
-                    if (SMART_CLIENT && SMART_CLIENT.state && SMART_CLIENT.state.tokenResponse) {
-                        ACCESS_TOKEN = SMART_CLIENT.state.tokenResponse.access_token;
-                        IS_SMART_MODE = true;
+    try {
+        const res = await fetch('https://sever2-hrcw.onrender.com/token', {
+            credentials: 'include'
+        });
+        if (!res.ok) return false;
 
-                        // 獲取患者上下文
-                        if (SMART_CLIENT.patient && SMART_CLIENT.patient.id) {
-                            PATIENT_CONTEXT = SMART_CLIENT.patient.id;
-                            console.log('👤 患者上下文:', PATIENT_CONTEXT);
-                        }
+        const data = await res.json();
+        ACCESS_TOKEN    = data.access_token;
+        IS_SMART_MODE   = true;
+        PATIENT_CONTEXT = data.patient;
+
+        // 顯示病人名字
+        if (data.patientName) {
+            //PATIENT_CONTEXT = data.patientName;
+           PATIENT_CONTEXT  = data.patient;
+        }
+
+        showSmartModeIndicator();
+        return true;
+    } catch {
+        return false;
+    }            
+           
+               
+                   
+                        
 
                         // 獲取醫師資訊
-                        if (SMART_CLIENT.user && SMART_CLIENT.user.fhirUser) {
-                            PRACTITIONER_CONTEXT = SMART_CLIENT.user.fhirUser;
-                            console.log('👨‍⚕️ 醫師資訊:', PRACTITIONER_CONTEXT);
-                        }
+                      //  if (SMART_CLIENT.user && SMART_CLIENT.user.fhirUser) {
+                     //       PRACTITIONER_CONTEXT = SMART_CLIENT.user.fhirUser;
+                      //      console.log('👨‍⚕️ 醫師資訊:', PRACTITIONER_CONTEXT);
+                        //}
 
-                        console.log('✅ SMART 授權成功');
-                        console.log('🔑 Access Token:', ACCESS_TOKEN ? '已獲取' : '未獲取');
-                        
+                     
                         // 顯示 SMART 模式指示器
-                        showSmartModeIndicator();
+                     //   showSmartModeIndicator();
                         
-                        return true;
-                    }
-                } else {
-                    console.log('📋 獨立模式運行（無 SMART Launch）');
-                }
+               
                 
-                return false;
-            } catch (error) {
-                console.error('❌ SMART 授權處理失敗:', error);
-                console.log('📋 切換到獨立模式');
-                IS_SMART_MODE = false;
-                return false;
-            }
+           
         }
 
         /**
