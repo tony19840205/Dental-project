@@ -3063,7 +3063,10 @@
             loadPatient();
 
             // 如果從 SMART Launch 進來，用選到的病人姓名覆蓋顯示
-            const smartName = localStorage.getItem('smart_patient_name');
+            const urlParams2 = new URLSearchParams(window.location.search);
+            const smartNameFromUrl = urlParams2.get('patient_name');
+            const smartNameFromStorage = localStorage.getItem('smart_patient_name');
+            const smartName = smartNameFromUrl || smartNameFromStorage;
             if (smartName) {
                 document.getElementById('patientName').textContent = smartName;
                 localStorage.removeItem('smart_patient_name');
