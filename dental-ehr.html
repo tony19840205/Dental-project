@@ -998,7 +998,7 @@
 
         // 顯示病人名字
         if (data.patientName) {
-            //PATIENT_CONTEXT = data.patientName;
+             document.getElementById('patientName').textContent  = data.patientName;
            PATIENT_CONTEXT  = data.patient;
         }
 
@@ -3057,15 +3057,8 @@
             // 自動載入鎖定的患者
             loadPatient();
 
-            // 如果從 SMART Launch 進來，用選到的病人姓名覆蓋顯示
-            const urlParams2 = new URLSearchParams(window.location.search);
-            const smartNameFromUrl = urlParams2.get('patient_name');
-            const smartNameFromStorage = localStorage.getItem('smart_patient_name');
-            const smartName = smartNameFromUrl || smartNameFromStorage;
-            if (smartName) {
-                document.getElementById('patientName').textContent = smartName;
-                localStorage.removeItem('smart_patient_name');
-            }
+          
+           
         })();
     </script>
 </body>
