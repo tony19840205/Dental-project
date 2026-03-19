@@ -103,7 +103,7 @@ const BACKEND = 'https://sever2-hrcw.onrender.com';
         }
 
                 if (code) {
-                    alert();
+                    
                     // 第二步：完成授權 → 換 token → 讀取病人姓名
                     statusEl.textContent = '正在完成授權並讀取患者資料...';
                     const client = await FHIR.oauth2.ready();
